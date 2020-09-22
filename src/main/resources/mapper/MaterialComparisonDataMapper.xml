@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtk.xtkanalyst.mapper.MaterialComparisonDataMapper">
+  <resultMap id="BaseResultMap" type="com.xtk.xtkanalyst.entity.MaterialComparisonData">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Mat_Name" jdbcType="VARCHAR" property="matName" />
+    <result column="Spec_Model" jdbcType="VARCHAR" property="specModel" />
+    <result column="Manufacturer" jdbcType="VARCHAR" property="manufacturer" />
+    <result column="Manufacturer_NO" jdbcType="VARCHAR" property="manufacturerNo" />
+    <result column="Equipment_Manufacturer" jdbcType="VARCHAR" property="equipmentManufacturer" />
+    <result column="Equipment_Manufacturer_NO" jdbcType="VARCHAR" property="equipmentManufacturerNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, Mat_Name, Spec_Model, Manufacturer, Manufacturer_NO, Equipment_Manufacturer, Equipment_Manufacturer_NO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material_comparison_data
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="matCom" resultType="com.xtk.xtkanalyst.entity.MatComResult" resultMap="MatComResultMap">
+	(
+	SELECT
+		t2.*,
+		t1.mat_num
+	FROM
+		( SELECT * FROM material_comparison_data WHERE Manufacturer_NO != "" AND Manufacturer_NO IS NOT NULL ) AS t2,
+		material_base_data AS t1
+	WHERE
+		t1.Manufacturer = t2.Manufacturer
+		AND t1.Manufacturer_NO = t2.Manufacturer_NO
+	) UNION
+	(
+	SELECT
+		t2.*,
+		t1.mat_num
+	FROM
+		( SELECT * FROM material_comparison_data WHERE Manufacturer_NO = "" OR Manufacturer_NO IS NULL ) AS t2,
+		material_base_data AS t1
+	WHERE
+		t1.Manufacturer = t2.Manufacturer
+	AND t1.Spec_Model = t2.Spec_Model
+	)
+	UNION
+		(
+	SELECT
+		t2.*,
+		t1.Mat_Num
+	FROM
+		(
+		SELECT
+			*
+		FROM
+			material_comparison_data
+		WHERE
+			( Equipment_Manufacturer != "" AND Equipment_Manufacturer IS NOT NULL )
+			AND ( Equipment_Manufacturer_NO != "" AND Equipment_Manufacturer_NO IS NOT NULL )
+		) AS t2,
+		material_base_data AS t1
+	WHERE
+		t2.Equipment_Manufacturer = t1.Equipment_Manufacturer
+		AND t2.Equipment_Manufacturer_NO = t1.Equipment_Manufacturer_NO
+	)
+  </select>
+  <resultMap id="MatComResultMap" type="com.xtk.xtkanalyst.entity.MatComResult">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="Mat_Name" jdbcType="VARCHAR" property="matName" />
+    <result column="Spec_Model" jdbcType="VARCHAR" property="specModel" />
+    <result column="Manufacturer" jdbcType="VARCHAR" property="manufacturer" />
+    <result column="Manufacturer_NO" jdbcType="VARCHAR" property="manufacturerNo" />
+    <result column="Equipment_Manufacturer" jdbcType="VARCHAR" property="equipmentManufacturer" />
+    <result column="Equipment_Manufacturer_NO" jdbcType="VARCHAR" property="equipmentManufacturerNo" />
+    <result column="Mat_Num" jdbcType="VARCHAR" property="matNum" />
+  </resultMap>
+  <delete id="deleteAll" >
+    delete from material_comparison_data
+    where ID like "%"
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from material_comparison_data
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.xtk.xtkanalyst.entity.MaterialComparisonData" useGeneratedKeys="true">
+    insert into material_comparison_data (Mat_Name, Spec_Model, Manufacturer, Manufacturer_No, Equipment_Manufacturer, Equipment_Manufacturer_NO)
+    values (#{matName,jdbcType=VARCHAR}, #{specModel,jdbcType=VARCHAR}, #{manufacturer,jdbcType=VARCHAR}, 
+      #{manufacturerNo,jdbcType=VARCHAR}, #{equipmentManufacturer,jdbcType=VARCHAR},
+      #{equipmentManufacturerNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.xtk.xtkanalyst.entity.MaterialComparisonData" useGeneratedKeys="true">
+    insert into material_comparison_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="matName != null">
+        Mat_Name,
+      </if>
+      <if test="specModel != null">
+        Spec_Model,
+      </if>
+      <if test="manufacturer != null">
+        Manufacturer,
+      </if>
+      <if test="manufacturerNo != null">
+        Manufacturer_NO,
+      </if>
+      <if test="equipmentManufacturer != null">
+        Equipment_Manufacturer,
+      </if>
+      <if test="equipmentManufacturerNo != null">
+        Equipment_Manufacturer_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="matName != null">
+        #{matName,jdbcType=VARCHAR},
+      </if>
+      <if test="specModel != null">
+        #{specModel,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturerNo != null">
+        #{manufacturerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentManufacturer != null">
+        #{equipmentManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentManufacturerNo != null">
+        #{equipmentManufacturerNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xtk.xtkanalyst.entity.MaterialComparisonData">
+    update material_comparison_data
+    <set>
+      <if test="matName != null">
+        Mat_Name = #{matName,jdbcType=VARCHAR},
+      </if>
+      <if test="specModel != null">
+        Spec_Model = #{specModel,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        Manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturerNo != null">
+        Manufacturer_NO = #{
+        manufacturerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentManufacturer != null">
+        Equipment_Manufacturer = #{equipmentManufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentManufacturerNo != null">
+        Equipment_Manufacturer_NO = #{equipmentManufacturerNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xtk.xtkanalyst.entity.MaterialComparisonData">
+    update material_comparison_data
+    set Mat_Name = #{matName,jdbcType=VARCHAR},
+      Spec_Model = #{specModel,jdbcType=VARCHAR},
+      Manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      Manufacturer_NO = #{manufacturerNo,jdbcType=VARCHAR},
+      Equipment_Manufacturer = #{equipmentManufacturer,jdbcType=VARCHAR},
+      Equipment_Manufacturer_NO = #{equipmentManufacturerNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
+
+<!-- 匹配规则：
+        制造商相同 ->
+                    编号不空 -> 编号相同 - > result
+                    编号为空 -> 规格型号是否可匹配 -> result
+        设备制造商相同 -> 设备制造商编号相同 -> result
+ -->
