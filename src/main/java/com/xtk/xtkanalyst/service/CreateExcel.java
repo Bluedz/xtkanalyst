@@ -37,8 +37,8 @@ public class CreateExcel {
             e.printStackTrace();
         }
     }
-    public void createFromStrList(List<List<String>> strLstLst){
-        String filePath = "E:\\Codes\\idea\\XTKanalyst\\target\\classes\\static\\xlsResult\\" + "strListfile.xls";
+    public void createFromStrList(List<List<String>> strLstLst, String fn){
+        String filePath = "E:\\Codes\\idea\\XTKanalyst\\target\\classes\\static\\xlsResult\\" + fn +".xlsx";
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("sheet1");
         int i = 0;

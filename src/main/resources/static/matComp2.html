@@ -54,7 +54,8 @@
             <div class="col-sm-2"></div>
             <div class="col-sm-5">
                 <h3>下载</h3>
-                <p>点击：<a href="#" id="dlLink">请等待文件处理结束</a></p>
+                <p>请点击：<a href="#" id="dlLink">请等待文件处理结束</a></p>
+                <span>案例号：<span id="dname"></></span>
 
             </div>
         </div>
@@ -62,10 +63,13 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script> -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"-->
+<!--        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"-->
+<!--        crossorigin="anonymous"></script> -->
+<!--    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
@@ -77,7 +81,7 @@
         
         function file_up() {
             const rootUrl = "http://localhost:9000";
-            const tempFileName = "/strListfile.xls"
+            // const tempFileName = "/strListfile.xls";
             var type = "file";
             var formData = new FormData();
             var loadUrl = rootUrl + "/index/impExcel";
@@ -91,8 +95,14 @@
                 success: function (data) {
                     // alert("ss" + data);
                     // alert($("#dlLink").html());
-                    $("#dlLink").html(data);
-                    $("#dlLink").attr("href", rootUrl + tempFileName);
+                    let backStr, fileName, msg;
+                    const fileType = ".xlsx";
+                    backStr = data + "";
+                    fileName = backStr.substr(backStr.indexOf('@')+1, 36);
+                    msg = backStr.substr(0, backStr.indexOf('@'));
+                    $("#dlLink").html(msg);
+                    $("#dlLink").attr("href", rootUrl + "/xlsResult/" + fileName + fileType);
+                    $("#dname").html(fileName);
                 }
             });
         }

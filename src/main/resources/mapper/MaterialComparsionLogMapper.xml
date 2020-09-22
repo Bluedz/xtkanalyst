@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtk.xtkanalyst.mapper.MaterialComparsionLogMapper">
+  <resultMap id="BaseResultMap" type="com.xtk.xtkanalyst.entity.MaterialComparsionLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="s_uuid" jdbcType="VARCHAR" property="sUuid" />
+    <result column="fd_MatNum" jdbcType="VARCHAR" property="fdMatnum" />
+    <result column="s_datetime" jdbcType="TIMESTAMP" property="sDatetime" />
+    <result column="s_Operator" jdbcType="VARCHAR" property="sOperator" />
+    <result column="s_xlsFileName" jdbcType="VARCHAR" property="sXlsfilename" />
+    <result column="s_RelatedInfor" jdbcType="VARCHAR" property="sRelatedinfor" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, s_uuid, fd_MatNum, s_datetime, s_Operator, s_xlsFileName, s_RelatedInfor
+  </sql>
+<!--  add-->
+
+<!--  /add-->
+  <select id="selectByExample" parameterType="com.xtk.xtkanalyst.entity.MaterialComparsionLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from material_comparsion_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material_comparsion_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from material_comparsion_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xtk.xtkanalyst.entity.MaterialComparsionLogExample">
+    delete from material_comparsion_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xtk.xtkanalyst.entity.MaterialComparsionLog" useGeneratedKeys="true">
+    insert into material_comparsion_log (s_uuid, fd_MatNum, s_datetime, 
+      s_Operator, s_xlsFileName, s_RelatedInfor
+      )
+    values (#{sUuid,jdbcType=VARCHAR}, #{fdMatnum,jdbcType=VARCHAR}, #{sDatetime,jdbcType=TIMESTAMP}, 
+      #{sOperator,jdbcType=VARCHAR}, #{sXlsfilename,jdbcType=VARCHAR}, #{sRelatedinfor,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xtk.xtkanalyst.entity.MaterialComparsionLog" useGeneratedKeys="true">
+    insert into material_comparsion_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sUuid != null">
+        s_uuid,
+      </if>
+      <if test="fdMatnum != null">
+        fd_MatNum,
+      </if>
+      <if test="sDatetime != null">
+        s_datetime,
+      </if>
+      <if test="sOperator != null">
+        s_Operator,
+      </if>
+      <if test="sXlsfilename != null">
+        s_xlsFileName,
+      </if>
+      <if test="sRelatedinfor != null">
+        s_RelatedInfor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sUuid != null">
+        #{sUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="fdMatnum != null">
+        #{fdMatnum,jdbcType=VARCHAR},
+      </if>
+      <if test="sDatetime != null">
+        #{sDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sOperator != null">
+        #{sOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="sXlsfilename != null">
+        #{sXlsfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="sRelatedinfor != null">
+        #{sRelatedinfor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xtk.xtkanalyst.entity.MaterialComparsionLogExample" resultType="java.lang.Long">
+    select count(*) from material_comparsion_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update material_comparsion_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sUuid != null">
+        s_uuid = #{record.sUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdMatnum != null">
+        fd_MatNum = #{record.fdMatnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sDatetime != null">
+        s_datetime = #{record.sDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sOperator != null">
+        s_Operator = #{record.sOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sXlsfilename != null">
+        s_xlsFileName = #{record.sXlsfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sRelatedinfor != null">
+        s_RelatedInfor = #{record.sRelatedinfor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update material_comparsion_log
+    set id = #{record.id,jdbcType=INTEGER},
+      s_uuid = #{record.sUuid,jdbcType=VARCHAR},
+      fd_MatNum = #{record.fdMatnum,jdbcType=VARCHAR},
+      s_datetime = #{record.sDatetime,jdbcType=TIMESTAMP},
+      s_Operator = #{record.sOperator,jdbcType=VARCHAR},
+      s_xlsFileName = #{record.sXlsfilename,jdbcType=VARCHAR},
+      s_RelatedInfor = #{record.sRelatedinfor,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xtk.xtkanalyst.entity.MaterialComparsionLog">
+    update material_comparsion_log
+    <set>
+      <if test="sUuid != null">
+        s_uuid = #{sUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="fdMatnum != null">
+        fd_MatNum = #{fdMatnum,jdbcType=VARCHAR},
+      </if>
+      <if test="sDatetime != null">
+        s_datetime = #{sDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sOperator != null">
+        s_Operator = #{sOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="sXlsfilename != null">
+        s_xlsFileName = #{sXlsfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="sRelatedinfor != null">
+        s_RelatedInfor = #{sRelatedinfor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xtk.xtkanalyst.entity.MaterialComparsionLog">
+    update material_comparsion_log
+    set s_uuid = #{sUuid,jdbcType=VARCHAR},
+      fd_MatNum = #{fdMatnum,jdbcType=VARCHAR},
+      s_datetime = #{sDatetime,jdbcType=TIMESTAMP},
+      s_Operator = #{sOperator,jdbcType=VARCHAR},
+      s_xlsFileName = #{sXlsfilename,jdbcType=VARCHAR},
+      s_RelatedInfor = #{sRelatedinfor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

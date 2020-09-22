@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 // IO
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.util.*;
 
@@ -100,6 +101,10 @@ public class Controller {
     private MaterialComparisonData materialComparisonData;
     @Autowired
     private MaterialComparisonDataMapper materialComparisonDataMapper;
+
+    @Resource
+    private MaterialComparsionLogMapper materialComparsionLogMapper;
+
     @PostMapping(value = "/impExcel")
     @ResponseBody
     public  String  impExcel(@RequestParam("file") MultipartFile file) throws Exception {
@@ -124,21 +129,51 @@ public class Controller {
         }
 
         //compare & return result
+        // add
+
+        MaterialComparsionLog materialComparsionLog = new MaterialComparsionLog();
+        Date datetime = new Date(System.currentTimeMillis());
+        String uuid = UUID.randomUUID().toString(); //.replaceAll("-", "");
+
+        // -add
         List<Object> objlist = materialComparisonDataMapper.matCom();
         List<List<String>> inlist = new ArrayList<List<String>>();
         List<String> hlt = Arrays.asList("物料名称","规格/型号","制造商","制造商编号","设备制造商","设备制造商编号", "西泰克物料号");
         inlist.add(hlt);
         for(Object obj : objlist){
             inlist.add(((MatComResult)obj).getAllAtrr());
+            // add
+            materialComparsionLog.setsDatetime(datetime);
+            materialComparsionLog.setFdMatnum(
+                    ((MatComResult)obj).getMatNum()
+            );
+            materialComparsionLog.setsUuid(uuid);
+            materialComparsionLogMapper.insert(materialComparsionLog);
+
+            // -add
         }
 
         CreateExcel ce = new CreateExcel();
-        ce.createFromStrList(inlist);
+        ce.createFromStrList(inlist, uuid);
 
         // return things
-        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+//
         String sid = "0bd88470-c483-4b65-814a-38be9cf09839";
-        return "上传成功,案例号：" + sid;
+        return "已上载并处理成功, 可以点击此处下载结果" + "@" + uuid;
+    }
+
+    /** restApi_matComUUIDList
+     *
+     */
+    @PostMapping(value = "/matComUUIDList")
+    @ResponseBody
+    public Object matComUUIDList(String uuid){
+        MaterialComparsionLogExample testExample = new MaterialComparsionLogExample();
+        if(uuid!=null&&!"".equals(uuid)){
+            testExample.createCriteria().andSUuidLike("%" + uuid +"%");
+        }
+        List<MaterialComparsionLog> list = materialComparsionLogMapper.selectByExample(testExample);
+        return list;
     }
 
     /** restApi_selectByID

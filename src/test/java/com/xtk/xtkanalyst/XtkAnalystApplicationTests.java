@@ -1,7 +1,10 @@
 package com.xtk.xtkanalyst;
 
 import com.xtk.xtkanalyst.entity.MatComResult;
+import com.xtk.xtkanalyst.entity.MaterialComparsionLog;
 import com.xtk.xtkanalyst.mapper.MaterialComparisonDataMapper;
+import com.xtk.xtkanalyst.mapper.MaterialComparsionLogMapper;
+
 import com.xtk.xtkanalyst.service.CreateExcel;
 import com.xtk.xtkanalyst.service.GetClassAttr;
 import org.apache.ibatis.session.SqlSession;
@@ -22,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 //@RunWith(SpringRunner.class)
@@ -70,7 +74,7 @@ class XtkAnalystApplicationTests {
         }
 
         CreateExcel ce = new CreateExcel();
-        ce.createFromStrList(list);
+        ce.createFromStrList(list, "test");
         System.out.println(
                 "xxxxxxxxx"
         );
@@ -98,6 +102,15 @@ class XtkAnalystApplicationTests {
             System.out.println(uuid);
 //            System.out.println(uuid.length());
         }
+    }
+
+    @Resource
+    private MaterialComparsionLogMapper materialComparsionLogMapper;
+    @Test
+    public void tstMatCompLogMapper(){
+        MaterialComparsionLog materialComparsionLog;
+        materialComparsionLog = materialComparsionLogMapper.selectByPrimaryKey(2);
+        System.out.println(materialComparsionLog.getsUuid());
     }
 
 }
