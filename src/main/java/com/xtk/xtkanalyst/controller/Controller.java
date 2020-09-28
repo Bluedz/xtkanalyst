@@ -20,6 +20,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.*;
 
@@ -107,7 +108,12 @@ public class Controller {
 
     @PostMapping(value = "/impExcel")
     @ResponseBody
-    public  String  impExcel(@RequestParam("file") MultipartFile file) throws Exception {
+    public  String  impExcel(@RequestParam("file") MultipartFile file, HttpServletRequest req) throws Exception {
+        String realPath = req.getSession().getServletContext().getRealPath("/xlsResult/");
+        String filePath = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+"/xlsResult/";
+        System.out.println(realPath + " : " + filePath);
+
+
         //empty table
         materialComparisonDataMapper.deleteAll();
 
