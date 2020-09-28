@@ -1,0 +1,186 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FE-Demo</title>
+    <!-- <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script> -->
+    <script language="javascript" src="js/Chart.min.js"></script>
+</head>
+
+<body style="background-color: snow">
+    <h1>SVW·仪征车间历年收货合计</h1>
+    <table>
+        <tr>
+            <td>
+                <h3>仪征工厂车身车间</h3>
+                <div style="height: 600px; width: 600px;">
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+            </td>
+            <td style="width: 100px"></td>
+            <td>
+                <h3>仪征工厂冲压车间</h3>
+                <div style="height: 600px; width: 600px;">
+                    <canvas id="chartjs-1" width="400" height="400"></canvas>
+                </div>
+            </td>
+        </tr>
+        <tr><td style="height: 50px"></td><td></td><td></td></tr>
+        <tr>
+            <td>
+                <h3>仪征工厂总装车间</h3>
+                <div style="height: 600px; width: 600px;">
+                    <canvas id="chartjs-0" width="400" height="400"></canvas>
+                </div>
+            </td>
+            <td style="width: 100px"></td>
+            <td>
+                <h3>仪征工厂油漆车间</h3>
+                <div style="height: 600px; width: 600px;">
+                    <canvas id="chartjs-2" width="400" height="400"></canvas>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+
+</body>
+
+<script>
+    var ctx = document.getElementById("myChart");
+    // var myLineChart = new Chart(ctx, {
+    //     type: "line",
+    //     data: data,
+    //     options: options
+    // });
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"],
+            datasets: [{
+                label: '仪征工厂车身车间',
+                data: [null, null, null, 21635195.22, 24040846.03, 44716250.47, 8624004.29, 12108353.01, 10902343.65, 19218957.35],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(168, 239, 94, 0.2)',
+                    'rgba(215, 239, 94, 0.2)',
+                    'rgba(166, 166, 166, 0.2)',
+                    'rgba(231, 94, 239, 0.2)'
+
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(168, 239, 94, 1)',
+                    'rgba(215, 239, 94, 1)',
+                    'rgba(166, 166, 166, 1)',
+                    'rgba(231, 94, 239, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+// ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
+</script>
+<script>
+    new Chart(
+        document.getElementById("chartjs-0"), 
+        { 
+            "type": "line", 
+            "data": 
+            { 
+                "labels": ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"], 
+                "datasets": [
+                    { 
+                        "label": "仪征工厂总装车间",
+                        "data": [null, null, null, 	15280026.78, 14268494.44, 29206443.23, 8380397.54, 11137510.89, 14638950.56, 10561973.51],
+                        "fill": false, 
+                        "borderColor": "rgb(75, 192, 192)", 
+                        "lineTension": 0.1 
+                    }] 
+            }, 
+            "options": {} 
+        });
+</script>
+<script>
+    new Chart(
+        document.getElementById("chartjs-1"),
+        {
+            "type": "pie",
+            "data":
+                {
+                    "labels": ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"],
+                    "datasets": [
+                        {
+                            "label": "仪征工厂冲压车间",
+                            "data": [null, null, null, 	9433353.32, 6672064.94, 26632106.07, 3034421.65, 2963416.62, 3236907.25, 4300434.54],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(168, 239, 94, 0.2)',
+                                'rgba(215, 239, 94, 0.2)',
+                                'rgba(166, 166, 166, 0.2)',
+                                'rgba(231, 94, 239, 0.2)'
+
+                            ]
+                        }]
+                },
+            "options": {}
+        });
+</script>
+<script>
+    new Chart(
+        document.getElementById("chartjs-2"),
+        {
+            "type": "polarArea",
+            "data":
+                {
+                    "labels": ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"],
+                    "datasets": [
+                        {
+                            "label": "仪征工厂油漆车间",
+                            "data": [null, null, null, 	25047686.26, 20063558.98, 40533368.33, 12929792.38, 13346131.29, 16884848.49, 13089928.67],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(168, 239, 94, 0.2)',
+                                'rgba(215, 239, 94, 0.2)',
+                                'rgba(166, 166, 166, 0.2)',
+                                'rgba(231, 94, 239, 0.2)'
+
+                            ]
+                        }]
+                },
+            "options": {}
+        });
+</script>
+
+</html>

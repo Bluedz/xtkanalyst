@@ -43,9 +43,9 @@
                     </a>
                 </p>
                 <div class="collapse" id="collapseExample" >
-                    <div class="card card-body"> 
+                    <div class="card card-body">
                         <!-- card card-body -->
-                        <p><a href="http://localhost:9000/test/sample.xlsx">sample.xslx</a></p>
+                        <p><a href="/Templates/templateOfMatList.xlsx">点击下载物料清单模板</a></p>
                     </div>
                 </div>
                 
@@ -96,7 +96,7 @@
                     // alert("ss" + data);
                     // alert($("#dlLink").html());
                     let backStr, fileName, msg;
-                    const fileType = ".xlsx";
+                    const fileType = ".xls";
                     backStr = data + "";
                     fileName = backStr.substr(backStr.indexOf('@')+1, 36);
                     msg = backStr.substr(0, backStr.indexOf('@'));
