@@ -4,11 +4,13 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CreateExcel {
     public void createFile(int a, int b){
@@ -37,8 +39,10 @@ public class CreateExcel {
             e.printStackTrace();
         }
     }
-    public void createFromStrList(List<List<String>> strLstLst, String fn){
-        String filePath = "E:\\Codes\\idea\\XTKanalyst\\target\\classes\\static\\xlsResult\\" + fn +".xls";
+    public void createFromStrList(List<List<String>> strLstLst, String pathStr, String UUIDStr){
+//        String filePath = "E:\\Codes\\idea\\XTKanalyst\\target\\classes\\static\\xlsResult\\" + fn +".xls";
+        String filePath = pathStr + UUIDStr +".xls";
+
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("sheet1");
         int i = 0;
@@ -57,6 +61,13 @@ public class CreateExcel {
             }
             i++;
         }
+
+        /* 创建目录 */
+        File file = new File(pathStr);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(
                     filePath

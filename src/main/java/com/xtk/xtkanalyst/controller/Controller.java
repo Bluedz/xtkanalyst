@@ -111,7 +111,12 @@ public class Controller {
     public  String  impExcel(@RequestParam("file") MultipartFile file, HttpServletRequest req) throws Exception {
         String realPath = req.getSession().getServletContext().getRealPath("/xlsResult/");
         String filePath = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+"/xlsResult/";
-        System.out.println(realPath + " : " + filePath);
+        System.out.println(
+                "----------------------------------------------------------------------------------------------------------------------" + "\n" +
+                "realPath" + " : " + realPath + "\n" +
+                "filePath" + " : " +  filePath + "\n" +
+                "----------------------------------------------------------------------------------------------------------------------"
+        );
 
 
         //empty table
@@ -139,7 +144,8 @@ public class Controller {
 
         MaterialComparsionLog materialComparsionLog = new MaterialComparsionLog();
         Date datetime = new Date(System.currentTimeMillis());
-        String uuid = UUID.randomUUID().toString(); //.replaceAll("-", "");
+        String uuid = UUID.randomUUID().toString();
+        //.replaceAll("-", "");
 
         // -add
         List<Object> objlist = materialComparisonDataMapper.matCom();
@@ -160,7 +166,7 @@ public class Controller {
         }
 
         CreateExcel ce = new CreateExcel();
-        ce.createFromStrList(inlist, uuid);
+        ce.createFromStrList(inlist, realPath, uuid);
 
         // return things
 //
