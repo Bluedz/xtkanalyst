@@ -3,6 +3,8 @@ package com.xtk.xtkanalyst.mapper;
 import com.xtk.xtkanalyst.entity.Tst;
 import com.xtk.xtkanalyst.entity.TstExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TstMapper {
@@ -21,4 +23,10 @@ public interface TstMapper {
     int updateByExampleSelective(@Param("record") Tst record, @Param("example") TstExample example);
 
     int updateByExample(@Param("record") Tst record, @Param("example") TstExample example);
+
+    // --
+
+    List<Map> tstCrossDB();
+
+    // --
 }

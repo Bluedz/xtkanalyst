@@ -69,6 +69,9 @@
   <select id="sl1"  resultType="com.xtk.xtkanalyst.entity.Tst" resultMap="BaseResultMap">
     select * from tst where re1 = 'd11'
   </select>
+  <select id="tstCrossDB" resultType="java.util.Map">
+    select * from xtk_analyst.user
+  </select>
   <select id="selectByExample" parameterType="com.xtk.xtkanalyst.entity.TstExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
